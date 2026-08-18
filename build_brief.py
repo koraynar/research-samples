@@ -113,7 +113,9 @@ def page(brief_html, sources_html, generated, counts):
     <p>Sources were collected first by parallel research passes (one per section), then <em>every</em> claim was checked against its cited document by a separate verification pass that could downgrade or drop it. Items that failed verification were removed. Scenarios and “what a change would signal” lines are analyst judgment and are labeled <span class="tag inferred">inferred</span>. Several AI models worked the task in fixed roles; the author supervised, resolved disagreements, and signed off. Source tally: {stats}.</p>
   </div>
 
+  <div class="brief">
   {brief_html}
+  </div>
 
   <h2 id="sources">Source appendix</h2>
   <p class="meta">Each entry: id · confidence · date — claim · source. Ids match the [S#] cites above.</p>
