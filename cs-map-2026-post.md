@@ -74,8 +74,8 @@ Notes: MIT 6.858's newer public run is 6.5660 Spring 2023 (css.csail.mit.edu/6.8
 - [roadmap.sh Developer Roadmaps](https://roadmap.sh/) — free
 
 ## How to study (short, evidence-based)
-- [Learning How to Learn](https://www.coursera.org/learn/learning-how-to-learn) — Most-taken course on study technique (4.18M learners, 4.8/5 from 93K reviews); covers focused/diffuse modes, chunking, procrastination, spac.
-- [The Learning Scientists — Six Strategies for Effective Learning](https://www.learningscientists.org/downloadable-materials) — Short, research-grounded summary of the techniques that actually work — spaced practice, retrieval practice, elaboration, interleaving, conc.
+- [Learning How to Learn](https://www.coursera.org/learn/learning-how-to-learn) — Most-taken course on study technique (4.18M learners, 4.8/5 from 93K reviews); covers focused/diffuse thinking, chunking, procrastination and spaced repetition.
+- [The Learning Scientists — Six Strategies for Effective Learning](https://www.learningscientists.org/downloadable-materials) — Short, research-grounded summary of the techniques that actually work — spaced practice, retrieval practice, elaboration, interleaving, concrete examples and dual coding — with free PDFs.
 - And the tooling habits from Missing Semester (above).
 
 **Caveats:** hours are rough; course pages move (I'll keep the image updated); "free to audit" means the lectures and most materials are free but graded certificates cost money; I avoided aggregator pages and linked the canonical course sites.
