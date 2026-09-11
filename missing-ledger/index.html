@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why that mistake is the most common one in underperforming accounts.">
+<meta name="author" content="Koray Nar">
+<link rel="canonical" href="https://koraynar.github.io/research-samples/missing-ledger/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Koray Nar — work samples">
+<meta property="og:title" content="The Missing Ledger — 458,611 clicks, 411 conversions, and a six-figure payout">
+<meta property="og:description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why that mistake is the most common one in underperforming accounts.">
+<meta property="og:url" content="https://koraynar.github.io/research-samples/missing-ledger/">
+<meta property="og:image" content="https://koraynar.github.io/research-samples/missing-ledger/cover.png">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Missing Ledger — 458,611 clicks, 411 conversions, and a six-figure payout">
+<meta name="twitter:description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why that mistake is the most common one in underperforming accounts.">
+<meta name="twitter:image" content="https://koraynar.github.io/research-samples/missing-ledger/cover.png">
+</head>
+<body>
+<title>The Missing Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+  :root {
+    --paper:      #f2f5f7;
+    --card:       #ffffff;
+    --ink:        #10161d;
+    --muted:      #5b6a77;
+    --faint:      #8695a2;
+    --rule:       #d5dde3;
+    --rule-soft:  #e6ecf0;
+    --paid:       #0d6b5a;
+    --paid-soft:  #d9ebe6;
+    --reported:   #a8482c;
+    --report-soft:#f3e2dc;
+    --shadow:     0 1px 2px rgba(16,22,29,.06), 0 8px 24px -18px rgba(16,22,29,.35);
+    --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --serif:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0d1319;
+      --card:       #141d25;
+      --ink:        #e7edf2;
+      --muted:      #9aabb8;
+      --faint:      #6d7f8c;
+      --rule:       #26333d;
+      --rule-soft:  #1c262f;
+      --paid:       #4cc2a6;
+      --paid-soft:  #13312b;
+      --reported:   #e08b6b;
+      --report-soft:#33201a;
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.9);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0d1319;
+    --card:       #141d25;
+    --ink:        #e7edf2;
+    --muted:      #9aabb8;
+    --faint:      #6d7f8c;
+    --rule:       #26333d;
+    --rule-soft:  #1c262f;
+    --paid:       #4cc2a6;
+    --paid-soft:  #13312b;
+    --reported:   #e08b6b;
+    --report-soft:#33201a;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.9);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    margin: 0;
+    padding: 0 20px 96px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .wide { max-width: 900px; margin: 0 auto; }
+
+  /* ---------- masthead ---------- */
+  header { padding: 56px 0 0; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 22px;
+  }
+  h1 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(31px, 5.4vw, 45px);
+    line-height: 1.1;
+    letter-spacing: -.021em;
+    text-wrap: balance;
+    margin: 0 0 20px;
+  }
+  .standfirst {
+    font-size: 19px;
+    color: var(--muted);
+    margin: 0 0 34px;
+    text-wrap: pretty;
+  }
+  .byline {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--faint);
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+  }
+
+  /* ---------- the two ledgers ---------- */
+  .ledgers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 48px 0 12px;
+  }
+  @media (max-width: 620px) { .ledgers { grid-template-columns: 1fr; } }
+  .ledger {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 22px 22px 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ledger .src {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .ledger.reported .src { color: var(--reported); }
+  .ledger.paid .src     { color: var(--paid); }
+  .ledger .fig {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: clamp(25px, 4.6vw, 33px);
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+  .ledger .fig.second { margin-top: 10px; }
+  .ledger .cap {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.45;
+    margin: 3px 0 0;
+  }
+  .ledger .note {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--faint);
+    margin: 14px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .verdict {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+    margin: 0 0 8px;
+  }
+
+  /* ---------- prose ---------- */
+  h2 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 23px;
+    letter-spacing: -.012em;
+    line-height: 1.25;
+    text-wrap: balance;
+    margin: 52px 0 14px;
+  }
+  h3 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 36px 0 12px;
+  }
+  p { margin: 0 0 17px; }
+  strong { font-weight: 500; font-family: var(--sans); font-size: 16.4px; }
+  em.term { font-style: italic; }
+  .lede-rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+
+  .pull {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: -.011em;
+    color: var(--ink);
+    border-left: 2px solid var(--paid);
+    padding: 2px 0 2px 20px;
+    margin: 30px 0;
+    text-wrap: pretty;
+  }
+
+  /* ---------- figures table ---------- */
+  .tablewrap { overflow-x: auto; margin: 22px 0 8px; }
+  table { border-collapse: collapse; width: 100%; font-family: var(--mono); font-size: 13.5px; }
+  caption {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-align: left;
+    padding-bottom: 10px;
+  }
+  th {
+    font-weight: 500;
+    text-align: left;
+    color: var(--faint);
+    font-size: 11px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    padding: 0 0 8px;
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  td {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  td:first-child, th:first-child { padding-right: 28px; white-space: normal; }
+  td.num, th.num { text-align: right; }
+  tr:last-child td { border-bottom: 0; }
+  td.flag { color: var(--reported); }
+
+  /* ---------- spend chart ---------- */
+  .chart { margin: 20px 0 6px; display: flex; flex-direction: column; gap: 7px; }
+  .row { display: grid; grid-template-columns: minmax(96px, 132px) 1fr auto; align-items: center; gap: 12px; }
+  .row .name {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .track { background: var(--rule-soft); height: 15px; border-radius: 1px; }
+  .bar { background: var(--paid); height: 15px; border-radius: 1px; }
+  .row .val {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .axis {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--faint);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-left: calc(min(132px, 40%) + 12px);
+  }
+
+  /* ---------- honesty block ---------- */
+  .honest {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--reported);
+    border-radius: 3px;
+    padding: 24px 26px;
+    margin: 40px 0 0;
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+  .honest h3 { margin-top: 0; color: var(--reported); }
+  .honest ul { margin: 0; padding-left: 19px; display: flex; flex-direction: column; gap: 9px; }
+  .honest li::marker { color: var(--faint); }
+
+  footer {
+    margin-top: 54px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--faint);
+    line-height: 1.7;
+  }
+  footer a { color: var(--paid); text-decoration: none; border-bottom: 1px solid var(--paid-soft); }
+  footer a:hover { border-bottom-color: var(--paid); }
+  a:focus-visible, .ledger:focus-visible { outline: 2px solid var(--paid); outline-offset: 3px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Google Ads · attribution case study</p>
+    <h1>458,611 clicks, 411 conversions, and a six-figure payout</h1>
+    <p class="standfirst">Google Ads reported a conversion rate of 0.09% across TRY&nbsp;353,822.80 of my own money. The commissions were paid anyway — by wire, into a real bank account. Here is why the report was wrong, and why that mistake is the most common one I find in accounts I audit.</p>
+    <p class="byline">
+      <span>Koray Nar</span>
+      <span>16 accounts · 90 campaigns</span>
+      <span>Jun 2023 – Aug 2026</span>
+    </p>
+  </header>
+</div>
+
+<div class="wide">
+  <div class="ledgers">
+    <div class="ledger reported">
+      <p class="src">Ledger A — what Google Ads reported</p>
+      <p class="fig">411</p>
+      <p class="cap">conversions, all accounts, all time</p>
+      <p class="fig second">TRY 860.88</p>
+      <p class="cap">cost per conversion, by that number</p>
+      <p class="note">Read on its own, this account set looks like a total loss: nearly ten million impressions, 458,611 clicks, and almost nothing to show for the spend.</p>
+    </div>
+    <div class="ledger paid">
+      <p class="src">Ledger B — what actually arrived</p>
+      <p class="fig">$16,878.80</p>
+      <p class="cap">FlexOffers, 10 wire transfers, Aug 2023 – Mar 2026</p>
+      <p class="fig second">TRY 165,450.22</p>
+      <p class="cap">Impact.com, confirmed paid</p>
+      <p class="note">Same clicks, same campaigns, same date range. Bank-confirmed, not "tracked" or "pending" — money that cleared.</p>
+    </div>
+  </div>
+  <p class="verdict">Two ledgers. One traffic source. Only one of them was visible inside Google Ads.</p>
+</div>
+
+<div class="wrap">
+  <h2>Why the number was wrong</h2>
+
+  <p>These were affiliate campaigns. The ads pointed straight at the merchant's page through an affiliate tracking link — <em class="term">direct linking</em>, which Google Ads permitted at the time and prohibits now.</p>
+
+  <p>When an ad sends a click to an external domain you do not own, the sale fires a pixel on <strong>the affiliate network's</strong> servers. Google Ads never sees that event. There is no tag on the merchant's checkout page that reports back, because the checkout page is not yours. So the conversion column stays near zero while the commissions accumulate somewhere Google Ads cannot read.</p>
+
+  <p class="pull">The 411 conversions were not the result. They were the small subset of events that happened to fire somewhere Google Ads could still observe — an app install, one merchant with a tag in place.</p>
+
+  <p>None of this makes the reporting broken in a bug sense. Google Ads reported exactly what it could measure. The failure was in reading that column as if it measured the outcome.</p>
+
+  <h2>Why it matters to an account that isn't yours</h2>
+
+  <p>Almost every "our account is underperforming" brief I read describes the same shape: spend continues, clicks continue, the conversion number falls or flatlines, and the bidding strategy gets blamed.</p>
+
+  <p>But the two failures look identical in the interface. A campaign that genuinely stopped converting and a campaign whose conversions stopped <em class="term">being recorded</em> produce the same falling line. One costs you a rebuild you didn't need; the other costs you months of a smart bidding strategy optimising toward a signal that stopped arriving.</p>
+
+  <p class="pull">A wasted click is loud — it appears in the search terms report with a cost beside it. A conversion that silently stopped firing shows you nothing at all. One side of the ledger complains; the other goes quiet. That asymmetry is why tracking problems get misdiagnosed as bidding problems for months.</p>
+
+  <p>So before touching a bid, a budget or a keyword, the first question is always the same one: <strong>is the conversion data telling the truth?</strong> Check the conversion action's status and its last-recorded timestamp. Compare the platform's count against the merchant's own back end. Find out whether a tag, a form, or a redirect changed near the date performance "dropped". That check takes under an hour and it decides which of two completely different jobs you are actually doing.</p>
+
+  <h2>The spend, by account</h2>
+  <p>Sixteen accounts under two logins, exported all-time and all-status — including removed campaigns and cancelled accounts, which Google Ads hides from the default view. That hiding is its own lesson: most of this history was invisible until the filters were changed.</p>
+</div>
+
+<div class="wide">
+  <div class="chart">
+    <div class="row"><span class="name">softwares</span><div class="track"><div class="bar" style="width:100%"></div></div><span class="val">89,538</span></div>
+    <div class="row"><span class="name">empttyyty</span><div class="track"><div class="bar" style="width:71.6%"></div></div><span class="val">64,123</span></div>
+    <div class="row"><span class="name">993-624-0025</span><div class="track"><div class="bar" style="width:64.2%"></div></div><span class="val">57,499</span></div>
+    <div class="row"><span class="name">CoreEquipments</span><div class="track"><div class="bar" style="width:42.9%"></div></div><span class="val">38,413</span></div>
+    <div class="row"><span class="name">SWANSON</span><div class="track"><div class="bar" style="width:33.2%"></div></div><span class="val">29,764</span></div>
+    <div class="row"><span class="name">433-775-2619</span><div class="track"><div class="bar" style="width:26.8%"></div></div><span class="val">24,022</span></div>
+    <div class="row"><span class="name">EMPTTTY</span><div class="track"><div class="bar" style="width:20.9%"></div></div><span class="val">18,721</span></div>
+    <div class="row"><span class="name">KOHL</span><div class="track"><div class="bar" style="width:17.1%"></div></div><span class="val">15,318</span></div>
+    <div class="row"><span class="name">healthandsports</span><div class="track"><div class="bar" style="width:9.2%"></div></div><span class="val">8,249</span></div>
+    <div class="row"><span class="name">Ship7</span><div class="track"><div class="bar" style="width:4.5%"></div></div><span class="val">4,034</span></div>
+    <div class="row"><span class="name">Resume.io</span><div class="track"><div class="bar" style="width:2.0%"></div></div><span class="val">1,818</span></div>
+    <div class="row"><span class="name">GlobalHealing</span><div class="track"><div class="bar" style="width:1.2%"></div></div><span class="val">1,064</span></div>
+    <div class="row"><span class="name">ads1</span><div class="track"><div class="bar" style="width:1.0%"></div></div><span class="val">867</span></div>
+    <div class="row"><span class="name">Viori</span><div class="track"><div class="bar" style="width:0.3%"></div></div><span class="val">297</span></div>
+    <div class="row"><span class="name">663-776-8362</span><div class="track"><div class="bar" style="width:0.07%"></div></div><span class="val">61</span></div>
+    <div class="row"><span class="name">277-524-6521</span><div class="track"><div class="bar" style="width:0.04%"></div></div><span class="val">34</span></div>
+  </div>
+  <div class="axis"><span>TRY 0</span><span>TRY 89,538</span></div>
+
+  <div class="tablewrap">
+    <table>
+      <caption>Totals, all 16 accounts, June 1 2023 – August 19 2026</caption>
+      <thead>
+        <tr><th>Measure</th><th class="num">Value</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Total spend</td><td class="num">TRY 353,822.80</td><td>Google Ads campaign export</td></tr>
+        <tr><td>Impressions</td><td class="num">9,989,035</td><td>Google Ads campaign export</td></tr>
+        <tr><td>Clicks</td><td class="num">458,611</td><td>Google Ads campaign export</td></tr>
+        <tr><td>Click-through rate</td><td class="num">4.59%</td><td>derived</td></tr>
+        <tr><td>Average cost per click</td><td class="num">TRY 0.77</td><td>derived</td></tr>
+        <tr><td>Conversions <em>as reported</em></td><td class="num flag">411</td><td>Google Ads conversion column</td></tr>
+        <tr><td>Conversion rate <em>as reported</em></td><td class="num flag">0.09%</td><td>derived</td></tr>
+        <tr><td>Commissions paid</td><td class="num">$16,878.80</td><td>FlexOffers payment history</td></tr>
+        <tr><td>Commissions paid</td><td class="num">TRY 165,450.22</td><td>Impact.com earnings history</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="honest">
+    <h3>What this is not</h3>
+    <ul>
+      <li><strong>These were my own campaigns, not client results.</strong> Every decision here had a personal cost, and I have no roster of managed client budgets. If you need someone who has run an agency book, that is not me.</li>
+      <li><strong>I hold no Google Ads certification.</strong></li>
+      <li><strong>Direct linking is banned now.</strong> The tactic all of this rested on is not repeatable, and I will never propose it to you.</li>
+      <li><strong>I work in writing.</strong> No calls — you get a written diagnosis, or a captioned screen walkthrough, which is more useful to forward internally anyway.</li>
+    </ul>
+  </div>
+
+  <h2>What you would actually get</h2>
+  <p>A written audit. Every finding attached to the screenshot or the report row that proves it, ranked by what it costs you per month, each with a specific fix. Read-only access is enough — no changes to your account without your sign-off, in writing, one item at a time.</p>
+
+  <footer>
+    Koray Nar · QA and evidence review · Rize, Türkiye<br>
+    Figures reconciled 2026-09-10 from all-time, all-status Google Ads campaign exports and affiliate network payment histories. Spend total matches the exports to the kuruş.
+  </footer>
+</div>
+
+</body>
+</html>

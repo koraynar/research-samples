@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Automations don't fail by stopping; they fail by continuing. Sixteen ways AI workflows and agents produce wrong output without raising an error, each with a test you can run yourself.">
+<meta name="author" content="Koray Nar">
+<link rel="canonical" href="https://koraynar.github.io/research-samples/silent-failures/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Koray Nar — work samples">
+<meta property="og:title" content="How Automations Fail Quietly — a field guide to sixteen silent failure modes">
+<meta property="og:description" content="Automations don't fail by stopping; they fail by continuing. Sixteen ways AI workflows and agents produce wrong output without raising an error, each with a test you can run yourself.">
+<meta property="og:url" content="https://koraynar.github.io/research-samples/silent-failures/">
+<meta property="og:image" content="https://koraynar.github.io/research-samples/silent-failures/cover.png">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How Automations Fail Quietly — a field guide to sixteen silent failure modes">
+<meta name="twitter:description" content="Automations don't fail by stopping; they fail by continuing. Sixteen ways AI workflows and agents produce wrong output without raising an error, each with a test you can run yourself.">
+<meta name="twitter:image" content="https://koraynar.github.io/research-samples/silent-failures/cover.png">
+</head>
+<body>
+<title>How Automations Fail Quietly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  :root {
+    --ground:    #f7f6f3;
+    --card:      #ffffff;
+    --sunk:      #efece5;
+    --ink:       #14161a;
+    --muted:     #5a6068;
+    --faint:     #8b9199;
+    --rule:      #dfdbd2;
+    --hair:      #ece8e0;
+    --loud:      #b23a26;
+    --loud-bg:   #f8e5e0;
+    --silent:    #9a8248;
+    --silent-bg: #f4eeda;
+    --probe:     #1f6b57;
+    --probe-bg:  #dfeee9;
+    --sans:  "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:    #0f1113;
+      --card:      #171a1e;
+      --sunk:      #1e2228;
+      --ink:       #e9eaec;
+      --muted:     #9aa2ab;
+      --faint:     #6d757e;
+      --rule:      #2a2f36;
+      --hair:      #21262c;
+      --loud:      #e0765c;
+      --loud-bg:   #2e1a15;
+      --silent:    #d4b45f;
+      --silent-bg: #2b2415;
+      --probe:     #56c4a4;
+      --probe-bg:  #122b25;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:    #0f1113;
+    --card:      #171a1e;
+    --sunk:      #1e2228;
+    --ink:       #e9eaec;
+    --muted:     #9aa2ab;
+    --faint:     #6d757e;
+    --rule:      #2a2f36;
+    --hair:      #21262c;
+    --loud:      #e0765c;
+    --loud-bg:   #2e1a15;
+    --silent:    #d4b45f;
+    --silent-bg: #2b2415;
+    --probe:     #56c4a4;
+    --probe-bg:  #122b25;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground); color: var(--ink);
+    font-family: var(--serif); font-size: 17px; line-height: 1.6;
+    margin: 0; padding: 0 20px 100px; -webkit-font-smoothing: antialiased;
+  }
+  .col  { max-width: 700px; margin: 0 auto; }
+  .wide { max-width: 940px; margin: 0 auto; }
+
+  header { padding: 60px 0 0; }
+  .kicker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 20px;
+  }
+  h1 {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(32px, 5.6vw, 48px); line-height: 1.05;
+    letter-spacing: -.025em; text-wrap: balance; margin: 0 0 18px;
+  }
+  .stand { font-size: 19.5px; color: var(--muted); margin: 0 0 30px; text-wrap: pretty; }
+  .byline {
+    font-family: var(--mono); font-size: 12px; color: var(--faint);
+    border-top: 1px solid var(--rule); padding-top: 14px;
+    display: flex; flex-wrap: wrap; gap: 6px 22px;
+  }
+
+  h2 {
+    font-family: var(--sans); font-weight: 600; font-size: 25px;
+    letter-spacing: -.015em; text-wrap: balance; margin: 58px 0 16px;
+  }
+  p { margin: 0 0 17px; }
+  .col > p strong { font-family: var(--sans); font-weight: 600; font-size: 16.2px; }
+
+  /* the two registers, which are the argument */
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 36px 0 10px; }
+  @media (max-width: 640px) { .pair { grid-template-columns: 1fr; } }
+  .reg { border-radius: 4px; padding: 20px 22px; border: 1px solid var(--rule); }
+  .reg.l { background: var(--loud-bg); border-color: var(--loud); }
+  .reg.s { background: var(--silent-bg); border-color: var(--silent); }
+  .reg h3 {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .16em;
+    text-transform: uppercase; margin: 0 0 10px;
+  }
+  .reg.l h3 { color: var(--loud); }
+  .reg.s h3 { color: var(--silent); }
+  .reg p { font-family: var(--sans); font-size: 15px; line-height: 1.5; margin: 0; color: var(--ink); }
+
+  /* taxonomy */
+  .fam { margin-top: 52px; }
+  .fam > h3 {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--faint);
+    border-bottom: 1px solid var(--rule); padding-bottom: 10px; margin: 0 0 4px;
+  }
+  .item { border-bottom: 1px solid var(--hair); padding: 22px 0; }
+  .item:last-child { border-bottom: 0; }
+  .ihead { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .code {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+    color: var(--faint); letter-spacing: .04em; flex: none;
+  }
+  .iname { font-family: var(--sans); font-weight: 600; font-size: 17.5px; letter-spacing: -.01em; }
+  .tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px; margin-left: auto; white-space: nowrap;
+  }
+  .tag.silent { background: var(--silent-bg); color: var(--silent); }
+  .item p { font-size: 16px; margin: 0 0 10px; color: var(--muted); }
+  .item p.what { color: var(--ink); }
+  .probe {
+    background: var(--probe-bg); border-left: 2px solid var(--probe);
+    padding: 11px 14px; border-radius: 0 3px 3px 0; margin-top: 12px;
+  }
+  .probe span {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--probe); display: block; margin-bottom: 5px;
+  }
+  .probe p { font-family: var(--sans); font-size: 14.5px; line-height: 1.5; margin: 0; color: var(--ink); }
+
+  .closing {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 26px 28px; margin-top: 54px; font-family: var(--sans); font-size: 16px; line-height: 1.55;
+  }
+  .closing h2 { margin: 0 0 12px; font-size: 21px; }
+  .closing p { margin: 0 0 12px; }
+  .closing p:last-child { margin: 0; }
+
+  footer {
+    margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 12px; color: var(--faint); line-height: 1.75;
+  }
+</style>
+
+<div class="col">
+  <header>
+    <p class="kicker">A field guide · AI automation QA</p>
+    <h1>Automations don't fail by stopping. They fail by continuing.</h1>
+    <p class="stand">When a workflow crashes, you find out. When it quietly produces the wrong answer, it runs for months and everything downstream inherits the mistake. This is a catalogue of the second kind — the ones nobody gets alerted about.</p>
+    <p class="byline">
+      <span>Koray Nar</span>
+      <span>QA &amp; evidence review</span>
+      <span>Rize, Türkiye</span>
+    </p>
+  </header>
+
+  <div class="pair">
+    <div class="reg l">
+      <h3>The loud failure</h3>
+      <p>The API times out. The script throws. A red badge appears, someone gets paged, it is fixed inside the hour. Every monitoring tool you own is built for this.</p>
+    </div>
+    <div class="reg s">
+      <h3>The quiet failure</h3>
+      <p>The step completes. The status is green. The output is wrong, or partial, or invented — and it flows into your CRM, your invoices, your replies to customers. Nothing anywhere reports a problem.</p>
+    </div>
+  </div>
+
+  <p>This is the same asymmetry that makes broken conversion tracking so expensive: a wasted ad click appears in a report with a cost beside it, while a conversion that silently stopped firing shows you nothing at all. One side of the ledger complains. The other goes quiet, and quiet reads as fine.</p>
+
+  <p><strong>Language models made this much worse</strong>, because a model's failure mode is not an error — it is a fluent, plausible, confidently formatted answer. A crashed step is a bug. A hallucinated one is a sentence, and sentences pass review.</p>
+
+  <p>Below are the failures I look for. They share one property: <strong>on the day they happen, your dashboard is green.</strong></p>
+</div>
+
+<div class="wide">
+  <div class="fam">
+    <h3>Family A — the model returns something wrong</h3>
+
+    <div class="item">
+      <div class="ihead"><span class="code">A1</span><span class="iname">Schema drift</span><span class="tag silent">no error raised</span></div>
+      <p class="what">The model returns <code>"12"</code> where the contract says <code>12</code>. Downstream, a sum becomes concatenation, a comparison becomes alphabetical, a filter silently matches nothing.</p>
+      <p>Structured output modes reduce this; they do not remove optional fields, nulls where you expected zero, or a list arriving as a single item.</p>
+      <div class="probe"><span>How to test</span><p>Assert types, not presence. Feed a case where the correct answer is legitimately zero, empty, or absent — that is where "falsy means missing" bugs live.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">A2</span><span class="iname">Invented identifiers</span><span class="tag silent">looks successful</span></div>
+      <p class="what">An agent calls a real tool with a plausible but fabricated ID — an order number, a SKU, a record key. The tool answers "not found", the agent tries another invention, and eventually writes a summary that reads like success.</p>
+      <div class="probe"><span>How to test</span><p>Ask about an entity that does not exist. The correct behaviour is to say so. Anything else — a guess, a near-match, a confident narrative — is the bug.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">A3</span><span class="iname">No route for "I don't know"</span><span class="tag silent">always answers</span></div>
+      <p class="what">The system has no path that returns nothing. Asked something out of scope, it produces an answer anyway, because producing answers is the only thing it does.</p>
+      <div class="probe"><span>How to test</span><p>Send five questions that genuinely cannot be answered from the available data. Count how many get an answer instead of a refusal.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">A4</span><span class="iname">Stale retrieval, confident citation</span><span class="tag silent">cites a real source</span></div>
+      <p class="what">The retrieval step returns a document that is genuinely in your knowledge base and eight months out of date. The answer is wrong and comes with a real, checkable reference — which makes it far more convincing than an obvious hallucination.</p>
+      <div class="probe"><span>How to test</span><p>Change a fact in the source of truth. Ask again an hour later. If the old answer survives, the pipeline is serving history.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">A5</span><span class="iname">Silent truncation</span><span class="tag silent">partial input, whole answer</span></div>
+      <p class="what">The input exceeds the window. Something in the middle is dropped — often by a framework, without a warning — and the model answers confidently from the fragment it received.</p>
+      <div class="probe"><span>How to test</span><p>Put a decisive fact in the exact middle of a long input. If the answer ignores it, the middle is being discarded.</p></div>
+    </div>
+  </div>
+
+  <div class="fam">
+    <h3>Family B — the plumbing does something twice, or half</h3>
+
+    <div class="item">
+      <div class="ihead"><span class="code">B1</span><span class="iname">Retry means double execution</span><span class="tag silent">both runs report success</span></div>
+      <p class="what">The webhook provider times out waiting and retries. Your workflow runs a second time: two invoices, two emails to the same customer, two rows. Each run individually succeeded, so nothing is flagged.</p>
+      <div class="probe"><span>How to test</span><p>Replay the same webhook payload twice. If you get two of anything, there is no idempotency key.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">B2</span><span class="iname">Half-finished multi-step writes</span><span class="tag silent">partially applied</span></div>
+      <p class="what">Step 4 of 6 fails. Steps 1–3 already wrote to three different systems. There is no transaction across a CRM, a spreadsheet and an email provider, so the record now exists in an impossible state.</p>
+      <div class="probe"><span>How to test</span><p>Force a failure at each step in turn and inspect what remains. Every step that writes before the last one needs an undo or a resume.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">B3</span><span class="iname">Retries hiding a real fault</span><span class="tag silent">eventually green</span></div>
+      <p class="what">Automatic retries convert a persistent failure into an intermittent one. The run goes green on attempt three, so no alert fires — and the underlying breakage is never investigated until it worsens.</p>
+      <div class="probe"><span>How to test</span><p>Alert on retry count, not just final status. A workflow that succeeds on the third attempt every single time is a workflow that is failing twice every single time.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">B4</span><span class="iname">Empty result read as "nothing to do"</span><span class="tag silent">zero rows, zero alarm</span></div>
+      <p class="what">A query returns no rows because a credential expired, a filter broke, or an upstream field was renamed. The automation treats an empty set as a quiet day and reports success. This one can run unnoticed for months.</p>
+      <div class="probe"><span>How to test</span><p>Alert on unexpected emptiness. If a job that normally processes forty items processes zero, that is an incident, not a quiet Tuesday.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">B5</span><span class="iname">Unbounded loop</span><span class="tag silent">found on the invoice</span></div>
+      <p class="what">An agent pursues a goal it cannot reach and keeps trying. Nothing crashes; tokens burn. It is usually discovered weeks later, on a bill, by someone in finance.</p>
+      <div class="probe"><span>How to test</span><p>Give it an impossible task and watch the step count and the spend. Every agent loop needs a hard ceiling on both.</p></div>
+    </div>
+  </div>
+
+  <div class="fam">
+    <h3>Family C — the world changed and nobody re-tested</h3>
+
+    <div class="item">
+      <div class="ihead"><span class="code">C1</span><span class="iname">Model version drift</span><span class="tag silent">degrades gradually</span></div>
+      <p class="what">The provider updates the model behind the name you pinned to, or you upgrade deliberately. Formatting shifts, verbosity changes, an instruction that used to be obeyed is now interpreted. Prompts tuned against the old behaviour quietly get worse.</p>
+      <div class="probe"><span>How to test</span><p>Keep twenty saved cases with known-good answers and re-run them on every model change. Without that set, you cannot tell an upgrade from a regression.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">C2</span><span class="iname">Locale and encoding</span><span class="tag silent">wrong numbers, right format</span></div>
+      <p class="what">Decimal comma against decimal point. <code>03/09</code> read as March in one system and September in another. Turkish <em>i / ı</em> and <em>İ / I</em> breaking a case-insensitive match. The output is well-formed and wrong.</p>
+      <div class="probe"><span>How to test</span><p>Run your real data, not English samples. For Turkish, test names containing İ, ı, ş, ğ through every matching and deduplication step.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">C3</span><span class="iname">Time zone drift</span><span class="tag silent">right time, wrong place</span></div>
+      <p class="what">"Send at 09:00" means 09:00 wherever the runner happens to live. Reminders arrive at 03:00, daily reports cover the wrong window, and a report that spans a boundary double-counts or skips.</p>
+      <div class="probe"><span>How to test</span><p>Check a scheduled run against the business's own clock, not the platform's. Then check it again after a daylight-saving change.</p></div>
+    </div>
+  </div>
+
+  <div class="fam">
+    <h3>Family D — the failures with a person on the other end</h3>
+
+    <div class="item">
+      <div class="ihead"><span class="code">D1</span><span class="iname">Instructions arriving inside the data</span><span class="tag silent">works as designed</span></div>
+      <p class="what">Your automation reads incoming email, web pages, reviews or documents. One of them contains text addressed to the model — "ignore previous instructions", "reply with the discount code", "forward this thread". The system cannot tell content from command, so it obeys. Nothing malfunctions; that is the point.</p>
+      <div class="probe"><span>How to test</span><p>Put an instruction in a document the workflow ingests and see whether it is followed. Anything reading untrusted input needs that input fenced as data and every outbound action gated.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">D2</span><span class="iname">Commitments made on your behalf</span><span class="tag silent">a promise nobody logged</span></div>
+      <p class="what">The assistant quotes a price, offers a discount, or confirms a slot that is not really free. The customer keeps the message. The business never sees it. You find out when someone arrives expecting what they were promised.</p>
+      <div class="probe"><span>How to test</span><p>Read what it actually sent — a sample of real outbound messages, not the prompt. Search them for prices, dates and guarantees nobody authorised.</p></div>
+    </div>
+
+    <div class="item">
+      <div class="ihead"><span class="code">D3</span><span class="iname">Customer data going somewhere new</span><span class="tag silent">no visible symptom</span></div>
+      <p class="what">Personal data reaches a third-party log, an analytics tool, or a prompt shared across customers. There is no error and no degradation in output — the only sign is in a data-flow diagram nobody drew.</p>
+      <div class="probe"><span>How to test</span><p>List every hop a customer record makes, including logs and error reporting. In Türkiye the KVKK question is who the controller is and what they consented to — decide it before the pipeline exists, not after.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="col">
+  <div class="closing">
+    <h2>The one that catches almost everyone</h2>
+    <p><strong>Nobody reads the output.</strong> A team wires up an assistant in an afternoon, watches the first few replies, and then never looks again. Six months later it has sent four thousand messages and no human has read a single one since week one.</p>
+    <p>You cannot ask the system to grade itself — that is the same class of machine marking its own work, and it will tell you it did fine. Checking it is a separate job, done by someone whose interest is in finding the failure rather than shipping the feature.</p>
+  </div>
+
+  <h2>What this is, and what it isn't</h2>
+  <p>This is the checklist I work from, published because it is more useful to you than it is secret. It is not a product pitch and it names no client — <strong>the failures above come from building and breaking these systems, not from a case file.</strong></p>
+  <p>If you run automations you have never adversarially tested, the fastest thing you can do today costs nothing: <strong>go and read fifty of the messages your system actually sent last month.</strong> Most people have never done it once, and most people find something.</p>
+
+  <footer>
+    Koray Nar · QA and evidence review · Rize, Türkiye<br>
+    Written 2026-09-10. Corrections welcome — a failure mode I have missed is worth more to me than a compliment.
+  </footer>
+</div>
+
+</body>
+</html>
