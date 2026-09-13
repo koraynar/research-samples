@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <title>The Change History Blind Spot — a Google Ads diagnostic note</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="One ad group stops serving. The campaign is active, the budget is untouched, and change history is clean. Change history is scoped to the campaign — and the thing that killed the ad group usually is not.">
+<meta name="description" content="One ad group stops serving. The campaign is active, the budget is untouched, nothing is disapproved, and change history is clean. The view you open from inside a campaign only shows edits to that campaign &mdash; and the thing that killed the ad group was edited somewhere else.">
 <meta name="author" content="Koray Nar">
 <link rel="canonical" href="https://koraynar.github.io/research-samples/change-history-blind-spot/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Koray Nar — work samples">
 <meta property="og:title" content="The Change History Blind Spot — a Google Ads diagnostic note">
-<meta property="og:description" content="One ad group stops serving. The campaign is active, the budget is untouched, and change history is clean. Change history is scoped to the campaign — and the thing that killed the ad group usually is not.">
+<meta property="og:description" content="One ad group stops serving. The campaign is active, the budget is untouched, nothing is disapproved, and change history is clean. The view you open from inside a campaign only shows edits to that campaign &mdash; and the thing that killed the ad group was edited somewhere else.">
 <meta property="og:url" content="https://koraynar.github.io/research-samples/change-history-blind-spot/">
 <meta property="og:image" content="https://koraynar.github.io/research-samples/change-history-blind-spot/cover.png">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="1200">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Change History Blind Spot — a Google Ads diagnostic note">
-<meta name="twitter:description" content="One ad group stops serving. The campaign is active, the budget is untouched, and change history is clean. Here is what change history cannot show you.">
+<meta name="twitter:description" content="One ad group stops serving. Every status reads healthy and change history is clean. Here is what the campaign view cannot show you.">
 <meta name="twitter:image" content="https://koraynar.github.io/research-samples/change-history-blind-spot/cover.png">
 </head>
 <body>
@@ -185,7 +185,7 @@
 <header>
   <p class="eyebrow">Google Ads · Diagnostic note</p>
   <h1>The change history blind spot</h1>
-  <p class="standfirst">One ad group stops serving. The campaign is active, the budget is untouched, nothing is disapproved, and change history is clean. Change history is scoped to the campaign — and the thing that killed the ad group usually is not.</p>
+  <p class="standfirst">One ad group stops serving. The campaign is active, the budget is untouched, nothing is disapproved, and change history is clean. The view you open from inside a campaign only shows edits to that campaign &mdash; and the thing that killed the ad group was edited somewhere else.</p>
   <p class="byline">
     <span>Koray Nar</span>
     <span>Google Ads · 90 campaigns, 16 accounts, own spend</span>
@@ -197,55 +197,61 @@
   <p class="src">The symptom</p>
   <dl>
     <dt>WHAT STOPPED</dt>
-    <dd>A single ad group inside an otherwise healthy campaign. Impressions to zero, not low — zero.</dd>
+    <dd>A single ad group inside an otherwise healthy campaign. Impressions to zero, not low &mdash; zero.</dd>
     <dt>WHAT DID NOT STOP</dt>
     <dd>Every other ad group in the same campaign, on the same budget, bidding normally.</dd>
     <dt>WHAT THE INTERFACE SAYS</dt>
     <dd>Campaign: Enabled. Ad group: Enabled. Keywords: Eligible. Ads: Approved. Budget: not limited.</dd>
     <dt>WHAT CHANGE HISTORY SAYS</dt>
-    <dd>Nothing. No edits anywhere near the date the traffic stopped.</dd>
+    <dd>Nothing. Opened from the campaign, no edits anywhere near the date the traffic stopped.</dd>
   </dl>
 </div>
-<p class="caption">Four green lights and a dead ad group.</p>
+<p class="caption">Five green lights and a dead ad group.</p>
 
-<p>This pattern comes up constantly, and it sends people down the wrong path because every surface that is supposed to report a problem is reporting that there is no problem. The instinct is to start changing things — raise the bid, rewrite the ads, rebuild the group. That is the worst available move, because it destroys the evidence of what actually happened.</p>
+<p>This pattern comes up constantly, and it sends people down the wrong path because every surface that is supposed to report a problem is reporting that there is no problem. The instinct is to start changing things &mdash; raise the bid, rewrite the ads, rebuild the group. That is the worst available move, because it destroys the evidence of what actually happened.</p>
 
-<p>The sequence below is ordered deliberately. Each step rules out a whole class of cause and costs a couple of minutes. Work it in order and stop at the first thing that explains a <em>total</em> stop rather than a decline.</p>
+<p>The sequence below is ordered deliberately. Each step rules out a whole class of cause and costs a couple of minutes. Work it in order and stop at the first thing that explains a total stop rather than a decline.</p>
 
 <h2>The elimination sequence</h2>
 
 <ol class="seq">
   <li>
-    <p class="step-t">Status and policy, at the ad and keyword level</p>
-    <p class="step-b">Not the campaign column — open the ad group and read the status of each ad and each keyword individually. You are looking for a disapproval, or the quieter states: <span style="font-family:var(--mono);font-size:13px">Eligible (limited)</span>, low search volume, or a keyword paused on its own.</p>
-    <p class="rules-out">Rules out → policy actions and single-entity pauses</p>
+    <p class="step-t">Status and diagnosis, keyword by keyword</p>
+    <p class="step-b">Not the campaign column &mdash; open the ad group and read each ad and each keyword. You are looking for a disapproval, a keyword gone to low search volume, or <span style="font-family:var(--mono);font-size:13px">Eligible (limited)</span>. Then hover each keyword&rsquo;s status. If the diagnosis says a negative keyword is preventing your ad from showing, you have your cause, and the only question left is <em>where that negative lives</em>. Google&rsquo;s own troubleshooting page for this symptom says the same and adds the line most people skip: check whether the negative is in a list.</p>
+    <p class="rules-out">Rules out &rarr; policy actions and dormant keywords; names a negative if one blocks the keyword&rsquo;s own query</p>
   </li>
   <li>
     <p class="step-t">Campaign change history, dated against the stop</p>
-    <p class="step-b">This answers the first real question: did a human do this? Set the range to bracket the date traffic died. A clean result here is meaningful but narrow — it tells you nobody edited <em>this campaign</em>. It does not tell you nobody edited something this campaign depends on.</p>
-    <p class="rules-out">Rules out → edits made inside the campaign</p>
+    <p class="step-b">This asks the first real question: did a human edit this campaign? Set the range to bracket the date traffic died. A clean result is meaningful but narrow. It covers edits to this campaign and its ad groups &mdash; including someone attaching or detaching a negative keyword list, which is a campaign-level change. It does not cover what was put <em>into</em> a list the campaign already had.</p>
+    <p class="rules-out">Rules out &rarr; edits made to the campaign, including a list attached or removed</p>
   </li>
   <li>
-    <p class="step-t">Keyword overlap with sibling ad groups</p>
-    <p class="step-b">If the same keyword sits in two ad groups, only one can enter the auction for that query — Google will not run two of your own ads against each other. The choice is not random: it prefers the keyword identical to the search term, and between equally relevant candidates it takes the higher Ad Rank. So a group whose theme was duplicated into a newer, better-performing group will go quiet without a single error. Export the campaign keywords and sort; duplicates are visible in seconds.</p>
-    <p class="rules-out">Rules out → internal cannibalisation</p>
+    <p class="step-t">The negatives the campaign can see</p>
+    <p class="step-b">Open the campaign&rsquo;s negative keywords view. It shows two of the three places a blocker can live: the campaign&rsquo;s and ad groups&rsquo; own negatives, and the <em>names</em> of any negative keyword lists applied &mdash; open each list and read it, because the table shows only names. Then open Admin &rsaquo; Account settings &rsaquo; Negative keywords: account-level negatives apply to every Search and Shopping campaign and never appear in the campaign view. Read each against the keyword the diagnosis named.</p>
+    <p class="rules-out">Rules out &rarr; a negative sitting in plain sight at campaign, ad-group or account level</p>
   </li>
   <li class="found">
-    <p class="step-t">Shared negative keyword lists</p>
-    <p class="step-b">This is the blind spot, and it is where a total stop with a clean history usually ends. Shared exclusion lists live in the account-level Shared Library, not in the campaign. A list can be attached to twenty campaigns at once, and adding a negative writes to the list itself — no campaign object is touched. Google Ads then keeps no change record of that write <em>at all</em>: the exclusion-list screen has no history view, and change history has no shared-set or negative-list type to filter on. So the list gets a new entry on Tuesday, an ad group dies on Tuesday, and change history stays empty — truthfully. Widening the scope does not help, because the list was never one of the objects it tracks.</p>
-    <p class="rules-out">Explains → a total stop, no error surface, clean history</p>
+    <p class="step-t">Shared negative keyword lists, and where their edits are logged</p>
+    <p class="step-b">This is the blind spot. A list can be attached to twenty campaigns at once, and adding a negative writes to the list itself &mdash; no campaign object is touched. That write <em>is</em> recorded, but as an <em>account-level</em> change-history row with an empty Campaign column: the list&rsquo;s name, the terms added, the user, the tool, the timestamp. Open change history from inside the campaign, or filter it by campaign, and the row is invisible &mdash; filtered out, not untracked. There is no shared-list change type to filter on either, so it surfaces only under All changes at account scope. So the list gets a new entry on Tuesday, an ad group dies on Tuesday, the campaign&rsquo;s history stays clean &mdash; truthfully &mdash; and nobody looking at the dead ad group ever scrolls up one scope.</p>
+    <p class="rules-out">Explains &rarr; a total stop, a diagnosis naming a negative you cannot find in the campaign, a clean campaign history</p>
   </li>
 </ol>
 
-<p class="pull">Change history records changes to campaigns. A shared negative list is not a campaign, and nothing records what goes into it. Both facts are ordinary; together they make a dead ad group look like a mystery.</p>
+<p class="pull">Change history is account-wide, but the view you open from inside a campaign only shows edits to that campaign. An edit to a shared negative list is logged against the list. It is recorded; it is just not where you are looking.</p>
+
+<h3>What this sequence leaves out, and why</h3>
+
+<p>Keyword overlap with a sibling ad group is usually offered as a cause here, and it is real, but it does not fit the symptom. If the same keyword sits in two ad groups, Google serves one: an exact-match keyword identical to the search first, then an identical phrase or broad keyword, then the ad group its relevance model judges the better fit, with Ad Rank as the tiebreaker. Two copies of the same keyword are equally identical to any search, so the choice falls to relevance and Ad Rank, auction by auction. That produces a fade as the newer group wins more often &mdash; not a dated flatline &mdash; which is why it belongs to the <em>preceded by a decline</em> check at the end rather than here.</p>
 
 <h2>Why one phrase can kill an entire ad group</h2>
 
-<p>People underestimate this because they are thinking about how <em>positive</em> keywords match. Negative keywords do not work the same way, and two of the differences matter here.</p>
+<p>People underestimate this because they are thinking about how <em>positive</em> keywords match. Negative keywords do not work the same way, and three of the differences matter here.</p>
 
 <p><strong>A negative always wins.</strong> It is not weighed against your bid or your quality score. If a query is excluded, no amount of exact-match precision or budget gets you into that auction.</p>
 
-<p><strong>A negative in broad match blocks any query that contains all of its terms, in any order.</strong> Not the phrase — the terms. So a single entry meant to exclude one bad query will also exclude every longer query built around the same words. If those words happen to be the words your ad group is themed on, the entry does not trim the group, it erases it.</p>
+<p><strong>A negative in broad match blocks any query that contains all of its terms, in any order.</strong> Not the phrase &mdash; the terms. So a single entry meant to exclude one bad query will also exclude every longer query built around the same words. If those words happen to be the words your ad group is themed on, the entry does not trim the group, it erases it.</p>
+
+<p><strong>A negative is not expanded to close variants.</strong> Plurals, singulars and synonyms each have to be added by hand. Misspellings are the exception since a 2024 update, and it runs one way: a correctly spelled negative blocks misspelled searches. Casing has never mattered.</p>
 
 <div class="tblwrap">
 <table class="tbl">
@@ -255,41 +261,41 @@
     <tr><td class="q">courier quote free online</td><td class="v blocked">BLOCKED</td><td>Order is irrelevant</td></tr>
     <tr><td class="q">free same day courier quote london</td><td class="v blocked">BLOCKED</td><td>Extra words do not rescue it</td></tr>
     <tr><td class="q">courier quote</td><td class="v serves">SERVES</td><td>Missing a required term</td></tr>
-    <tr><td class="q">free courier quotes</td><td class="v serves">SERVES</td><td>“quotes” is not “quote”</td></tr>
+    <tr><td class="q">free courier quotes</td><td class="v serves">SERVES</td><td>&ldquo;quotes&rdquo; is not &ldquo;quote&rdquo;</td></tr>
     <tr><td class="q">free couriers quote</td><td class="v blocked">BLOCKED</td><td>The variant is on a word the negative does not contain</td></tr>
   </tbody>
 </table>
 </div>
-<p class="caption">One negative broad entry — <span style="font-family:var(--mono);font-size:13px">free quote</span> — against six queries.</p>
+<p class="caption">One negative broad entry &mdash; <span style="font-family:var(--mono);font-size:13px">free quote</span> &mdash; against six queries.</p>
 
-<p>The last two rows are where this gets hard to see from the outside. Negative keywords are not expanded the way positive keywords are — they match the term you typed, and plurals, singulars and synonyms each have to be added by hand. Misspellings and casing are the exception: since 2024 negatives account for those on their own.</p>
+<p>The last two rows are where this gets hard to see from the outside. The variation only rescues a query when it lands on a word the negative itself contains. <span style="font-family:var(--mono);font-size:13px">free courier quotes</span> escapes because &ldquo;quotes&rdquo; is not &ldquo;quote&rdquo;. <span style="font-family:var(--mono);font-size:13px">free couriers quote</span> does not escape, because the word that changed was never part of the negative. That is the inconsistency you actually observe: two almost identical queries, one serving and one not, which reads like a bidding problem and is nothing of the kind.</p>
 
-<p>But the variation only rescues a query when it lands on a word the negative itself contains. <span style="font-family:var(--mono);font-size:13px">free courier quotes</span> escapes because “quotes” is not “quote”. <span style="font-family:var(--mono);font-size:13px">free couriers quote</span> does not escape, because the word that changed was never part of the negative. That is the inconsistency you actually observe: two almost identical queries, one serving and one not, which reads like a bidding problem and is nothing of the kind.</p>
+<h2>Why so little appears to be broken</h2>
 
-<h2>Why nothing appears to be broken</h2>
+<p>Negatives are applied when a query is matched, before the auction. Nothing in your account is edited when that happens &mdash; change history only ever shows the negative being <em>added</em>, never the block. So most of what you would look for is an absence.</p>
 
-<p>Negatives are applied when a query is matched, before an auction happens. They do not modify anything in your account, so there is nothing for the interface to flag.</p>
+<p>The keyword stays enabled; nothing is paused, removed or disapproved, and for any search the negative does not catch it competes normally. Whether it still reads <span style="font-family:var(--mono);font-size:13px">Eligible</span> depends on how much the negative covers. A negative that catches only some of the keyword&rsquo;s queries leaves the status untouched, and no status value flags the trim. A negative that matches the keyword&rsquo;s own text is the blunt case, and Google does surface that one: the keyword diagnosis says a negative keyword is preventing the ad from showing, and the API reports the keyword as not eligible, overridden by a campaign-level negative.</p>
 
-<p>Your keywords keep their <span style="font-family:var(--mono);font-size:13px">Eligible</span> status, because they are eligible — the negative does not disqualify the keyword, it removes the ad from that particular auction, and no status value means “blocked by a negative”. Your ads stay approved. Quality Score does not decline either: it freezes at whatever it last computed and then reverts to a dash, because scoring needs recent impressions and there are none. Nothing warns you, because from the system’s point of view nothing failed; it did exactly what it was told.</p>
+<p>Two things narrow that diagnosis. It tests the keyword&rsquo;s exact-match form only. And the bulk tools you would reach for next &mdash; Google&rsquo;s <em>Remove conflicting negative keywords</em> recommendation and Ads Editor&rsquo;s conflict check &mdash; look at ad-group and campaign negatives and skip shared lists. The one place the cause lives is the one place the bulk checks do not look.</p>
 
-<p>Google does flag the blunt version of this, and it is worth checking first: hover a keyword’s status and the diagnostic will say a negative keyword is preventing the ad from showing, and Ads Editor has a conflicting-negative-keywords check that finds the same thing in bulk. What neither catches is the partial block — the queries you never had a keyword for, which is most of what a themed ad group lives on.</p>
+<p>Quality Score does not fall either. It is built from searches that exactly match the keyword, compared over the last 90 days, so a negative that trims the surrounding broad and phrase queries never touches it. Only a negative that blocks the keyword&rsquo;s own exact query starves it, and even then the score does not decline &mdash; it keeps showing until the exact-search history ages out, then shows a dash.</p>
 
-<p>Beyond that the only symptom is an absence. The search terms report is where you see it: a blocked query produces no impression, so it does not appear with poor metrics, it stops appearing at all. Absence on its own proves nothing, though — terms below Google’s reporting threshold are folded into “other search terms” and are invisible whether you blocked them or not. Compare the weeks either side of the date and look for what left.</p>
+<p>The search terms report is where the evidence lives, and it comes in two forms. Going forward, a blocked query earns no impression, so it gets no new row: it does not appear with poor metrics, it stops appearing. But the report is date-ranged, and its Added/Excluded column is evaluated against your negatives <em>as they stand today</em>. Widen the range to reach back before the stop and the queries that used to serve are still there, now flagged Excluded. That flag is the positive confirmation. Terms below Google&rsquo;s reporting threshold are folded into &ldquo;other search terms&rdquo; and are invisible either way, so absence alone proves nothing &mdash; the Excluded flag on a term that used to convert does.</p>
 
 <h2>After you find it</h2>
 
 <ul class="checks">
-  <li><b>Copy the exact entry before deleting it.</b> It is the only record of what was excluded. Once the list is edited you cannot reconstruct which queries were being suppressed, and if the removal turns out to be wrong you have nothing to restore.</li>
-  <li><b>Read the current state; do not reach for history.</b> Change history cannot answer this one, so start with what is in front of you: open the campaign’s negative keywords view, note every exclusion list attached to it, and read their contents against the search terms that were working the week before serving stopped. The blocking term is usually obvious on sight. If you need the date, it lives outside the interface — <span style="font-family:var(--mono);font-size:13px">change_status</span> for <span style="font-family:var(--mono);font-size:13px">shared_set</span> through the API or a script will tell you the list changed and roughly when, though never <em>what</em> changed, or you diff it against a snapshot of your own. Account-scope change history is good for exactly one thing here: ruling out the other cause, someone attaching or detaching a list, which is a campaign-level change and is tracked.</li>
-  <li><b>Judge it at the end of the week, not the next morning.</b> The group does not come back carrying the starved period as history — it comes back carrying a gap. No impressions meant no new quality data, so the auction leans on older ad-group and account signals until fresh volume rebuilds it. Day-one numbers understate the fix rather than measuring it: the sample is thin, conversions are credited to the click date and land days later, and bidding is still re-adjusting. Give it a full conversion-lag window, and make sure the date range starts <em>after</em> the fix — a trailing 30-day view still averages in the blocked days.</li>
-  <li><b>Check whether the stop was preceded by a decline.</b> A group that faded for weeks and then flatlined is two problems, not one. Removing the exclusion restores serving; it does nothing about whatever was already eroding performance beforehand. Fix the stop, then go back and find the decline.</li>
+  <li><b>Copy the exact entry, and check which campaigns use the list, before touching it.</b> The entry is shared, so the fix is rarely deletion &mdash; deleting it un-blocks the term in every campaign the list is attached to, where it may be doing exactly what it was meant to. Usually the answer is to narrow the match type, or move that negative to campaign level where it was wanted, and detach this campaign from the list only if nothing else in it applies here.</li>
+  <li><b>Date it from account-level change history.</b> Widen the view to the whole account &mdash; all campaigns, all changes &mdash; and look for a row naming the list with an empty Campaign column. It carries the timestamp, the user, the tool that made the write, and the terms added. If you audit by script instead, the picture is thinner: <span style="font-family:var(--mono);font-size:13px">change_status</span> for <span style="font-family:var(--mono);font-size:13px">shared_set</span> tells you the list changed and when &mdash; latest change only, 90 days back &mdash; but never what changed, and <span style="font-family:var(--mono);font-size:13px">change_event</span> does not cover shared sets at all. A scripted audit has to diff the lists themselves.</li>
+  <li><b>Confirm serving the next morning; judge performance only after a full conversion lag.</b> Impressions and impression share prove the block is gone on day one. Conversions do not &mdash; they are credited to the click date and land days later, so the most recent days always read low. Read your real lag off the Days to conversion segment; a week is the floor, not the rule. Start the date range the day after the fix, because a trailing 30-day view drags the gap into your totals and trend and makes the fix read as a decline. And removing a negative does not put Smart Bidding back into Learning; the strategy simply resumes bidding on queries it has had no recent data for.</li>
+  <li><b>Check whether the stop was preceded by a decline.</b> A group that faded for weeks and then flatlined is two problems, not one. Removing the exclusion restores serving; it does nothing about whatever was already eroding performance beforehand &mdash; a duplicate keyword winning in a newer ad group is one common cause of exactly that fade. Fix the stop, then go back and find the decline.</li>
 </ul>
 
 <h2>The general form</h2>
 
 <p>The specific answer here is a shared exclusion list. The transferable one is about the shape of the evidence.</p>
 
-<p>A clean audit log is not proof that nothing changed. It is proof that nothing changed <em>within the scope that log covers</em>. Every account has dependencies that sit outside the thing you are looking at — shared libraries, account-level settings, linked feeds, rules and scripts, another person's campaign competing for the same query. When a total stop meets a clean history, the productive question is not <em>what happened here</em> but <em>what does this depend on that would not be recorded here</em>.</p>
+<p>A clean audit log is not proof that nothing changed. It is proof that nothing changed <em>within the scope you opened it at</em>. Every account has dependencies that sit outside the object you are looking at. Some are recorded but attributed elsewhere &mdash; an edit to a list twenty campaigns share, a change made by an automated rule or script. Some sit at a scope you never opened &mdash; account-level negatives, another campaign competing for the same query. When a total stop meets a clean history, the productive question is not <em>what happened here</em> but <em>what does this depend on that would not be logged here</em>.</p>
 
 <p>That question is worth asking before touching bids, and it is usually free to answer.</p>
 
