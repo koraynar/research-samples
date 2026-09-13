@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Change History Blind Spot — a Google Ads diagnostic note</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="One ad group stops serving. The campaign is active, the budget is untouched, and change history is clean. Change history is scoped to the campaign — and the thing that killed the ad group usually is not.">
+<meta name="author" content="Koray Nar">
+<link rel="canonical" href="https://koraynar.github.io/research-samples/change-history-blind-spot/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Koray Nar — work samples">
+<meta property="og:title" content="The Change History Blind Spot — a Google Ads diagnostic note">
+<meta property="og:description" content="One ad group stops serving. The campaign is active, the budget is untouched, and change history is clean. Change history is scoped to the campaign — and the thing that killed the ad group usually is not.">
+<meta property="og:url" content="https://koraynar.github.io/research-samples/change-history-blind-spot/">
+<meta property="og:image" content="https://koraynar.github.io/research-samples/change-history-blind-spot/cover.png">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Change History Blind Spot — a Google Ads diagnostic note">
+<meta name="twitter:description" content="One ad group stops serving. The campaign is active, the budget is untouched, and change history is clean. Here is what change history cannot show you.">
+<meta name="twitter:image" content="https://koraynar.github.io/research-samples/change-history-blind-spot/cover.png">
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+  :root {
+    --paper:      #f2f5f7;
+    --card:       #ffffff;
+    --ink:        #10161d;
+    --muted:      #5b6a77;
+    --faint:      #8695a2;
+    --rule:       #d5dde3;
+    --rule-soft:  #e6ecf0;
+    --live:       #0d6b5a;
+    --live-soft:  #d9ebe6;
+    --dead:       #a8482c;
+    --dead-soft:  #f3e2dc;
+    --shadow:     0 1px 2px rgba(16,22,29,.06), 0 8px 24px -18px rgba(16,22,29,.35);
+    --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --serif:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#0d1319; --card:#141d25; --ink:#e7edf2; --muted:#9aabb8; --faint:#6d7f8c;
+      --rule:#26333d; --rule-soft:#1c262f;
+      --live:#4cc2a6; --live-soft:#13312b; --dead:#e08b6b; --dead-soft:#33201a;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.9);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#0d1319; --card:#141d25; --ink:#e7edf2; --muted:#9aabb8; --faint:#6d7f8c;
+    --rule:#26333d; --rule-soft:#1c262f;
+    --live:#4cc2a6; --live-soft:#13312b; --dead:#e08b6b; --dead-soft:#33201a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.9);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--serif); font-size: 17px; line-height: 1.62;
+    margin: 0; padding: 0 20px 96px; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  header { padding: 56px 0 0; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 22px;
+  }
+  h1 {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(31px, 5.4vw, 45px); line-height: 1.1;
+    letter-spacing: -.021em; text-wrap: balance; margin: 0 0 20px;
+  }
+  .standfirst { font-size: 19px; color: var(--muted); margin: 0 0 34px; text-wrap: pretty; }
+  .byline {
+    font-family: var(--mono); font-size: 12.5px; color: var(--faint);
+    border-top: 1px solid var(--rule); padding-top: 14px;
+    display: flex; flex-wrap: wrap; gap: 6px 20px;
+  }
+
+  h2 {
+    font-family: var(--sans); font-weight: 600; font-size: 23px;
+    letter-spacing: -.012em; line-height: 1.25; text-wrap: balance; margin: 52px 0 14px;
+  }
+  h3 {
+    font-family: var(--mono); font-weight: 600; font-size: 12px;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--faint); margin: 36px 0 12px;
+  }
+  p { margin: 0 0 17px; }
+  strong { font-weight: 500; font-family: var(--sans); font-size: 16.4px; }
+  a { color: inherit; text-decoration-color: var(--faint); text-underline-offset: 3px; }
+
+  .pull {
+    font-family: var(--sans); font-weight: 500; font-size: 20px; line-height: 1.4;
+    letter-spacing: -.011em; color: var(--ink);
+    border-left: 3px solid var(--dead); padding: 2px 0 2px 20px; margin: 34px 0;
+  }
+
+  /* symptom card */
+  .symptom {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 3px;
+    padding: 24px 24px 12px; box-shadow: var(--shadow); margin: 44px 0 8px;
+  }
+  .symptom .src {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--dead); margin: 0 0 16px;
+  }
+  .symptom dl { margin: 0; }
+  .symptom dt {
+    font-family: var(--mono); font-size: 12.5px; color: var(--faint);
+    letter-spacing: .04em; margin: 0;
+  }
+  .symptom dd {
+    font-family: var(--sans); font-size: 15px; color: var(--ink);
+    margin: 2px 0 15px; line-height: 1.45;
+  }
+  .caption {
+    font-family: var(--sans); font-size: 13.5px; color: var(--faint);
+    text-align: center; margin: 0 0 8px;
+  }
+
+  /* elimination sequence */
+  ol.seq { list-style: none; counter-reset: step; padding: 0; margin: 26px 0 8px; }
+  ol.seq > li {
+    counter-increment: step; position: relative;
+    padding: 0 0 22px 46px; border-left: 1px solid var(--rule); margin-left: 13px;
+  }
+  ol.seq > li:last-child { border-left-color: transparent; padding-bottom: 4px; }
+  ol.seq > li::before {
+    content: counter(step); position: absolute; left: -13px; top: 0;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--rule); color: var(--faint);
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.seq > li.found::before {
+    background: var(--dead-soft); border-color: var(--dead); color: var(--dead);
+  }
+  ol.seq .step-t {
+    font-family: var(--sans); font-weight: 600; font-size: 16px;
+    margin: 1px 0 5px; line-height: 1.35;
+  }
+  ol.seq .step-b { font-size: 16px; color: var(--muted); margin: 0; line-height: 1.55; }
+  ol.seq .rules-out {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .05em;
+    color: var(--faint); margin: 7px 0 0;
+  }
+
+  /* match-type table */
+  .tbl { width: 100%; border-collapse: collapse; margin: 22px 0 10px; font-family: var(--sans); font-size: 14.5px; }
+  .tbl th {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--faint); text-align: left; font-weight: 600;
+    border-bottom: 1px solid var(--rule); padding: 0 12px 9px 0;
+  }
+  .tbl td { border-bottom: 1px solid var(--rule-soft); padding: 11px 12px 11px 0; vertical-align: top; color: var(--muted); }
+  .tbl td.q { font-family: var(--mono); font-size: 13px; color: var(--ink); white-space: nowrap; }
+  .tbl td.v { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; white-space: nowrap; }
+  .tbl .blocked { color: var(--dead); }
+  .tbl .serves  { color: var(--live); }
+  .tblwrap { overflow-x: auto; }
+
+  .checks { margin: 22px 0 8px; padding: 0; list-style: none; }
+  .checks li {
+    border-top: 1px solid var(--rule-soft); padding: 14px 0 0; margin: 0 0 14px;
+    font-size: 16px; color: var(--muted); line-height: 1.55;
+  }
+  .checks li b {
+    display: block; font-family: var(--sans); font-weight: 600; font-size: 15.5px;
+    color: var(--ink); margin: 0 0 4px;
+  }
+
+  footer {
+    margin: 64px 0 0; border-top: 1px solid var(--rule); padding-top: 18px;
+    font-family: var(--mono); font-size: 12px; color: var(--faint); line-height: 1.7;
+  }
+  footer a { color: var(--faint); }
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Google Ads · Diagnostic note</p>
+  <h1>The change history blind spot</h1>
+  <p class="standfirst">One ad group stops serving. The campaign is active, the budget is untouched, nothing is disapproved, and change history is clean. Change history is scoped to the campaign — and the thing that killed the ad group usually is not.</p>
+  <p class="byline">
+    <span>Koray Nar</span>
+    <span>Google Ads · 90 campaigns, 16 accounts, own spend</span>
+    <span>September 2026</span>
+  </p>
+</header>
+
+<div class="symptom">
+  <p class="src">The symptom</p>
+  <dl>
+    <dt>WHAT STOPPED</dt>
+    <dd>A single ad group inside an otherwise healthy campaign. Impressions to zero, not low — zero.</dd>
+    <dt>WHAT DID NOT STOP</dt>
+    <dd>Every other ad group in the same campaign, on the same budget, bidding normally.</dd>
+    <dt>WHAT THE INTERFACE SAYS</dt>
+    <dd>Campaign: Enabled. Ad group: Enabled. Keywords: Eligible. Ads: Approved. Budget: not limited.</dd>
+    <dt>WHAT CHANGE HISTORY SAYS</dt>
+    <dd>Nothing. No edits anywhere near the date the traffic stopped.</dd>
+  </dl>
+</div>
+<p class="caption">Four green lights and a dead ad group.</p>
+
+<p>This pattern comes up constantly, and it sends people down the wrong path because every surface that is supposed to report a problem is reporting that there is no problem. The instinct is to start changing things — raise the bid, rewrite the ads, rebuild the group. That is the worst available move, because it destroys the evidence of what actually happened.</p>
+
+<p>The sequence below is ordered deliberately. Each step rules out a whole class of cause and costs a couple of minutes. Work it in order and stop at the first thing that explains a <em>total</em> stop rather than a decline.</p>
+
+<h2>The elimination sequence</h2>
+
+<ol class="seq">
+  <li>
+    <p class="step-t">Status and policy, at the ad and keyword level</p>
+    <p class="step-b">Not the campaign column — open the ad group and read the status of each ad and each keyword individually. You are looking for a disapproval, or the quieter states: <span style="font-family:var(--mono);font-size:13px">Eligible (limited)</span>, low search volume, or a keyword paused on its own.</p>
+    <p class="rules-out">Rules out → policy actions and single-entity pauses</p>
+  </li>
+  <li>
+    <p class="step-t">Campaign change history, dated against the stop</p>
+    <p class="step-b">This answers the first real question: did a human do this? Set the range to bracket the date traffic died. A clean result here is meaningful but narrow — it tells you nobody edited <em>this campaign</em>. It does not tell you nobody edited something this campaign depends on.</p>
+    <p class="rules-out">Rules out → edits made inside the campaign</p>
+  </li>
+  <li>
+    <p class="step-t">Keyword overlap with sibling ad groups</p>
+    <p class="step-b">If the same keyword sits in two ad groups, only one can enter the auction for that query — Google will not run two of your own ads against each other. The choice is not random: it prefers the keyword identical to the search term, and between equally relevant candidates it takes the higher Ad Rank. So a group whose theme was duplicated into a newer, better-performing group will go quiet without a single error. Export the campaign keywords and sort; duplicates are visible in seconds.</p>
+    <p class="rules-out">Rules out → internal cannibalisation</p>
+  </li>
+  <li class="found">
+    <p class="step-t">Shared negative keyword lists</p>
+    <p class="step-b">This is the blind spot, and it is where a total stop with a clean history usually ends. Shared exclusion lists live in the account-level Shared Library, not in the campaign. A list can be attached to twenty campaigns at once, and adding a negative writes to the list itself — no campaign object is touched. Google Ads then keeps no change record of that write <em>at all</em>: the exclusion-list screen has no history view, and change history has no shared-set or negative-list type to filter on. So the list gets a new entry on Tuesday, an ad group dies on Tuesday, and change history stays empty — truthfully. Widening the scope does not help, because the list was never one of the objects it tracks.</p>
+    <p class="rules-out">Explains → a total stop, no error surface, clean history</p>
+  </li>
+</ol>
+
+<p class="pull">Change history records changes to campaigns. A shared negative list is not a campaign, and nothing records what goes into it. Both facts are ordinary; together they make a dead ad group look like a mystery.</p>
+
+<h2>Why one phrase can kill an entire ad group</h2>
+
+<p>People underestimate this because they are thinking about how <em>positive</em> keywords match. Negative keywords do not work the same way, and two of the differences matter here.</p>
+
+<p><strong>A negative always wins.</strong> It is not weighed against your bid or your quality score. If a query is excluded, no amount of exact-match precision or budget gets you into that auction.</p>
+
+<p><strong>A negative in broad match blocks any query that contains all of its terms, in any order.</strong> Not the phrase — the terms. So a single entry meant to exclude one bad query will also exclude every longer query built around the same words. If those words happen to be the words your ad group is themed on, the entry does not trim the group, it erases it.</p>
+
+<div class="tblwrap">
+<table class="tbl">
+  <thead><tr><th>Incoming search query</th><th>Result</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td class="q">free courier quote</td><td class="v blocked">BLOCKED</td><td>Contains both terms</td></tr>
+    <tr><td class="q">courier quote free online</td><td class="v blocked">BLOCKED</td><td>Order is irrelevant</td></tr>
+    <tr><td class="q">free same day courier quote london</td><td class="v blocked">BLOCKED</td><td>Extra words do not rescue it</td></tr>
+    <tr><td class="q">courier quote</td><td class="v serves">SERVES</td><td>Missing a required term</td></tr>
+    <tr><td class="q">free courier quotes</td><td class="v serves">SERVES</td><td>“quotes” is not “quote”</td></tr>
+    <tr><td class="q">free couriers quote</td><td class="v blocked">BLOCKED</td><td>The variant is on a word the negative does not contain</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="caption">One negative broad entry — <span style="font-family:var(--mono);font-size:13px">free quote</span> — against six queries.</p>
+
+<p>The last two rows are where this gets hard to see from the outside. Negative keywords are not expanded the way positive keywords are — they match the term you typed, and plurals, singulars and synonyms each have to be added by hand. Misspellings and casing are the exception: since 2024 negatives account for those on their own.</p>
+
+<p>But the variation only rescues a query when it lands on a word the negative itself contains. <span style="font-family:var(--mono);font-size:13px">free courier quotes</span> escapes because “quotes” is not “quote”. <span style="font-family:var(--mono);font-size:13px">free couriers quote</span> does not escape, because the word that changed was never part of the negative. That is the inconsistency you actually observe: two almost identical queries, one serving and one not, which reads like a bidding problem and is nothing of the kind.</p>
+
+<h2>Why nothing appears to be broken</h2>
+
+<p>Negatives are applied when a query is matched, before an auction happens. They do not modify anything in your account, so there is nothing for the interface to flag.</p>
+
+<p>Your keywords keep their <span style="font-family:var(--mono);font-size:13px">Eligible</span> status, because they are eligible — the negative does not disqualify the keyword, it removes the ad from that particular auction, and no status value means “blocked by a negative”. Your ads stay approved. Quality Score does not decline either: it freezes at whatever it last computed and then reverts to a dash, because scoring needs recent impressions and there are none. Nothing warns you, because from the system’s point of view nothing failed; it did exactly what it was told.</p>
+
+<p>Google does flag the blunt version of this, and it is worth checking first: hover a keyword’s status and the diagnostic will say a negative keyword is preventing the ad from showing, and Ads Editor has a conflicting-negative-keywords check that finds the same thing in bulk. What neither catches is the partial block — the queries you never had a keyword for, which is most of what a themed ad group lives on.</p>
+
+<p>Beyond that the only symptom is an absence. The search terms report is where you see it: a blocked query produces no impression, so it does not appear with poor metrics, it stops appearing at all. Absence on its own proves nothing, though — terms below Google’s reporting threshold are folded into “other search terms” and are invisible whether you blocked them or not. Compare the weeks either side of the date and look for what left.</p>
+
+<h2>After you find it</h2>
+
+<ul class="checks">
+  <li><b>Copy the exact entry before deleting it.</b> It is the only record of what was excluded. Once the list is edited you cannot reconstruct which queries were being suppressed, and if the removal turns out to be wrong you have nothing to restore.</li>
+  <li><b>Read the current state; do not reach for history.</b> Change history cannot answer this one, so start with what is in front of you: open the campaign’s negative keywords view, note every exclusion list attached to it, and read their contents against the search terms that were working the week before serving stopped. The blocking term is usually obvious on sight. If you need the date, it lives outside the interface — <span style="font-family:var(--mono);font-size:13px">change_status</span> for <span style="font-family:var(--mono);font-size:13px">shared_set</span> through the API or a script will tell you the list changed and roughly when, though never <em>what</em> changed, or you diff it against a snapshot of your own. Account-scope change history is good for exactly one thing here: ruling out the other cause, someone attaching or detaching a list, which is a campaign-level change and is tracked.</li>
+  <li><b>Judge it at the end of the week, not the next morning.</b> The group does not come back carrying the starved period as history — it comes back carrying a gap. No impressions meant no new quality data, so the auction leans on older ad-group and account signals until fresh volume rebuilds it. Day-one numbers understate the fix rather than measuring it: the sample is thin, conversions are credited to the click date and land days later, and bidding is still re-adjusting. Give it a full conversion-lag window, and make sure the date range starts <em>after</em> the fix — a trailing 30-day view still averages in the blocked days.</li>
+  <li><b>Check whether the stop was preceded by a decline.</b> A group that faded for weeks and then flatlined is two problems, not one. Removing the exclusion restores serving; it does nothing about whatever was already eroding performance beforehand. Fix the stop, then go back and find the decline.</li>
+</ul>
+
+<h2>The general form</h2>
+
+<p>The specific answer here is a shared exclusion list. The transferable one is about the shape of the evidence.</p>
+
+<p>A clean audit log is not proof that nothing changed. It is proof that nothing changed <em>within the scope that log covers</em>. Every account has dependencies that sit outside the thing you are looking at — shared libraries, account-level settings, linked feeds, rules and scripts, another person's campaign competing for the same query. When a total stop meets a clean history, the productive question is not <em>what happened here</em> but <em>what does this depend on that would not be recorded here</em>.</p>
+
+<p>That question is worth asking before touching bids, and it is usually free to answer.</p>
+
+<footer>
+  Written from work on my own Google Ads accounts — 90 campaigns across 16 accounts, TRY 353,822.80 of my own spend — and from diagnosing this failure mode in public help threads. A diagnostic note, not commissioned work: no client data appears here and the query examples are invented to illustrate the matching rule.<br>
+  Koray Nar · <a href="mailto:koraynar@gmail.com">koraynar@gmail.com</a> · <a href="../">More work samples</a> · Related: <a href="../missing-ledger/">The Missing Ledger</a>
+</footer>
+</div>
+</body>
+</html>
