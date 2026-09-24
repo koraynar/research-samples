@@ -179,6 +179,7 @@
     font-family: var(--mono); font-size: 12px; color: var(--faint); line-height: 1.7;
   }
   footer a { color: var(--faint); }
+  @media print { .symptom, .symptom * { box-shadow: none !important; } }
 </style>
 
 <div class="wrap">
@@ -208,7 +209,7 @@
 </div>
 <p class="caption">Five green lights and a dead ad group.</p>
 
-<p>This pattern comes up constantly, and it sends people down the wrong path because every surface that is supposed to report a problem is reporting that there is no problem. The instinct is to start changing things &mdash; raise the bid, rewrite the ads, rebuild the group. That is the worst available move. Change history and the search terms report survive it, but every edit buries the real change under new rows around the exact date you need to isolate, and rebuilding the group leaves you with keywords that carry none of the search-term history that would have shown the block.</p>
+<p>This pattern is a common one in public Google Ads help threads, and it sends people down the wrong path because every surface that is supposed to report a problem is reporting that there is no problem. The instinct is to start changing things &mdash; raise the bid, rewrite the ads, rebuild the group. That is the worst available move. Change history and the search terms report survive it, but every edit buries the real change under new rows around the exact date you need to isolate, and rebuilding the group leaves you with keywords that carry none of the search-term history that would have shown the block.</p>
 
 <p>The sequence below is ordered deliberately. Each step rules out a whole class of cause and costs a couple of minutes. Work it in order and stop at the first thing that explains a total stop rather than a decline.</p>
 
@@ -288,7 +289,7 @@
   <li><b>Copy the exact entry, and check which campaigns use the list, before touching it.</b> The entry is shared, so anything you do to it happens in every campaign the list is attached to &mdash; deleting it, or narrowing its match type, un-blocks the term everywhere, including where it was doing exactly what it was meant to. The safe moves leave the shared entry alone: add the negative at campaign level in the campaigns that wanted it and then remove it from the list, or detach this campaign from the list if nothing else in it applies here.</li>
   <li><b>Date it from account-level change history.</b> Widen the view to the whole account &mdash; all campaigns, all changes &mdash; and look for a row naming the list with an empty Campaign column. It carries the timestamp, the user, the tool that made the write, and the terms added. If you audit by script instead, the picture is thinner. <span style="font-family:var(--mono);font-size:13px">change_status</span> tracks the list itself and its campaign attachments &mdash; latest change only, 90 days back &mdash; but not the terms inside it; Google says only that an edit to a term <em>might</em> surface on the parent list&rsquo;s row. <span style="font-family:var(--mono);font-size:13px">change_event</span> does not cover shared sets at all. A scripted audit has to diff the lists themselves.</li>
   <li><b>Confirm serving the next morning; judge performance only after a full conversion lag.</b> Impressions and clicks refresh within the hour, so a non-zero impression count for the ad group proves the block is gone on day one &mdash; do not use impression share for this, it lags. Conversions prove nothing yet: they are credited to the click date and land days later, so the most recent days always read low. Read your real lag off the Days to conversion segment on a range that ended at least a conversion window ago, then exclude that many trailing days before judging. Start the date range the day after the fix, because a trailing 30-day view drags the gap into your totals and trend and makes the fix read as a decline. And removing a negative does not put Smart Bidding back into Learning; the strategy simply resumes bidding on queries it has had no recent data for.</li>
-  <li><b>Check whether the stop was preceded by a decline.</b> A group that faded for weeks and then flatlined is two problems, not one. Removing the exclusion restores serving; it does nothing about whatever was already eroding performance beforehand &mdash; the same keyword added later to another ad group that now out-ranks this one is one cause I see often. Fix the stop, then go back and find the decline.</li>
+  <li><b>Check whether the stop was preceded by a decline.</b> A group that faded for weeks and then flatlined is two problems, not one. Removing the exclusion restores serving; it does nothing about whatever was already eroding performance beforehand &mdash; for example, the same keyword added later to another ad group that now out-ranks this one. Fix the stop, then go back and find the decline.</li>
 </ul>
 
 <h2>The general form</h2>
@@ -301,7 +302,7 @@
 
 <footer>
   Written from work on my own Google Ads accounts — 90 campaigns across 16 accounts, TRY 353,822.80 of my own spend — and from diagnosing this failure mode in public help threads. A diagnostic note, not commissioned work: no client data appears here and the query examples are invented to illustrate the matching rule.<br>
-  Koray Nar · <a href="mailto:koraynar@gmail.com">koraynar@gmail.com</a> · <a href="../">More work samples</a> · Related: <a href="../missing-ledger/">The Missing Ledger</a>
+  Koray Nar · QA and evidence review
 </footer>
 </div>
 </body>

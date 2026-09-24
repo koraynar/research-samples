@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <title>The Missing Ledger — Google Ads attribution case study</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why that mistake is the most common one in underperforming accounts.">
+<meta name="description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why a conversion that stops being recorded looks exactly like a bidding problem.">
 <meta name="author" content="Koray Nar">
 <link rel="canonical" href="https://koraynar.github.io/research-samples/missing-ledger/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Koray Nar — work samples">
 <meta property="og:title" content="The Missing Ledger — 458,611 clicks, 411 conversions, and a six-figure payout">
-<meta property="og:description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why that mistake is the most common one in underperforming accounts.">
+<meta property="og:description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why a conversion that stops being recorded looks exactly like a bidding problem.">
 <meta property="og:url" content="https://koraynar.github.io/research-samples/missing-ledger/">
 <meta property="og:image" content="https://koraynar.github.io/research-samples/missing-ledger/cover.png">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="1200">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Missing Ledger — 458,611 clicks, 411 conversions, and a six-figure payout">
-<meta name="twitter:description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why that mistake is the most common one in underperforming accounts.">
+<meta name="twitter:description" content="Google Ads reported a 0.09% conversion rate across TRY 353,822.80 of my own ad spend. The commissions were paid anyway. Why the report was wrong, and why a conversion that stops being recorded looks exactly like a bidding problem.">
 <meta name="twitter:image" content="https://koraynar.github.io/research-samples/missing-ledger/cover.png">
 </head>
 <body>
@@ -250,7 +250,7 @@
     white-space: nowrap;
   }
   td:first-child, th:first-child { padding-right: 28px; white-space: normal; }
-  td.num, th.num { text-align: right; }
+  td.num, th.num { text-align: right; padding-right: 28px; }
   tr:last-child td { border-bottom: 0; }
   td.flag { color: var(--reported); }
 
@@ -311,13 +311,14 @@
   footer a { color: var(--paid); text-decoration: none; border-bottom: 1px solid var(--paid-soft); }
   footer a:hover { border-bottom-color: var(--paid); }
   a:focus-visible, .ledger:focus-visible { outline: 2px solid var(--paid); outline-offset: 3px; }
+  @media print { footer { margin-top: 18px; padding-top: 8px; break-inside: avoid; } * { box-shadow: none !important; } }
 </style>
 
 <div class="wrap">
   <header>
     <p class="eyebrow">Google Ads · attribution case study</p>
     <h1>458,611 clicks, 411 conversions, and a six-figure payout</h1>
-    <p class="standfirst">Google Ads reported a conversion rate of 0.09% across TRY&nbsp;353,822.80 of my own money. The commissions were paid anyway — by wire, into a real bank account. Here is why the report was wrong, and why that mistake is the most common one I find in accounts I audit.</p>
+    <p class="standfirst">Google Ads reported a conversion rate of 0.09% across TRY&nbsp;353,822.80 of my own money. The commissions were paid anyway — by wire, into a real bank account. Here is why the report was wrong, and why it is the first thing I check in any Google Ads account.</p>
     <p class="byline">
       <span>Koray Nar</span>
       <span>16 accounts · 90 campaigns</span>
