@@ -170,6 +170,7 @@
     margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--rule);
     font-family: var(--mono); font-size: 12px; color: var(--faint); line-height: 1.75;
   }
+  @media print { .item, .probe, .closing { break-inside: avoid; page-break-inside: avoid; } .fam > h3, .ihead, h2 { break-after: avoid; page-break-after: avoid; } }
 </style>
 
 <div class="col">
