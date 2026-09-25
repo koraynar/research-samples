@@ -104,7 +104,7 @@ def page(brief_html, sources_html, generated, counts):
     <span class="kicker">Public method sample · not commissioned · no forecasts</span>
     <h1>{html.escape(TITLE)}</h1>
     <p class="meta">{html.escape(SUBTITLE)}</p>
-    <p class="meta">Koray Nar · Public-source research analyst · Istanbul (remote) · <a href="mailto:koraynar@gmail.com">koraynar@gmail.com</a> · Information cutoff {generated} · <a class="btn" href="brief.pdf">Download PDF</a></p>
+    <p class="meta">Koray Nar · Public-source research analyst · Rize, Türkiye (remote) · Information cutoff {generated} · <a class="btn" href="brief.pdf">Download PDF</a></p>
     {legend}
   </header>
 
